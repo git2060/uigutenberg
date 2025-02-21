@@ -3,10 +3,14 @@ import React, { useState, useEffect, useCallback } from "react";
 export default function Display() {
   const [books, setBooks] = useState({ total_books: 0, books: [] });
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [nextPage, setNextPage] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
 
   const fetchBooks = useCallback(async (query = "") => {
     try {
-      let apiUrl = `http://127.0.0.1:8000/api/books/`;
+      let apiUrl = `http://35.160.120.126:8000/api/books/`;
       if (query) {
         apiUrl += `?${query}`;
       }
@@ -63,6 +67,24 @@ export default function Display() {
       ) : (
         <p>No books available</p>
       )}
+      <br/>
+      </div>
+      <div style={{ marginTop: "50px" }}>
+        <button
+          style={{ margin: "5px" }}
+          disabled={!prevPage}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        >
+          Previous
+        </button>
+        <span> Page {currentPage} of {totalPages} </span>
+        <button
+          style={{ margin: "5px" }}
+          disabled={!nextPage}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
       </div>
     </>
   );
