@@ -10,7 +10,7 @@ export default function Display() {
 
   const fetchBooks = useCallback(async (query = "") => {
     try {
-      let apiUrl = `http://35.160.120.126:8000/api/books/`;
+      let apiUrl = `http://127.0.0.1:8000/api/books/`;
       if (query) {
         apiUrl += `?${query}`;
       }
